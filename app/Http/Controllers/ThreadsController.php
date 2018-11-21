@@ -48,6 +48,7 @@ class ThreadsController extends Controller
      */
     public function show(Thread $thread)
     {
+        // $thread here we should eager load owner or user
         return view('threads.show', compact('thread'));
     }
 
