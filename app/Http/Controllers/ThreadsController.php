@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class ThreadsController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +29,7 @@ class ThreadsController extends Controller
      */
     public function create()
     {
-        //
+        return view('threads.create');
     }
 
     /**
@@ -37,7 +40,20 @@ class ThreadsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+           'title'  => 'required',
+           'body'  => 'required',
+           'channgel_id'  => 'required|exists:channel,id',
+        ]);
+
+        $thread = Thread::create([
+            'user_id' => auth()->id(),
+            'channel_id' => $request->get('channel_id'),
+            'title' => $request->get('title'),
+            'body' => $request->get('body'),
+        ]);
+
+        return redirect($thread->path());
     }
 
     /**
@@ -46,8 +62,9 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(Thread $thread)
+    public function show($channelId, Thread $thread)
     {
+        // return $channelId;
         // $thread here we should eager load owner or user
         return view('threads.show', compact('thread'));
     }
