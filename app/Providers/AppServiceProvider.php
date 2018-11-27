@@ -15,6 +15,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        $channels = \App\Channel::latest()->paginate();
+        
+        view()->share('channels', $channels);
+
     }
 
     /**

@@ -26,7 +26,7 @@
     @auth
         <div class="row justify-content-center mt-5">
             <div class="col-md-8 mb-4">
-                <form method="POST" action="{{ route('replies.store', $thread->id) }}">
+                <form method="POST" action="{{ route('replies.store', [$channelId, $thread->id]) }}">
                     @csrf
 
                     <div class="form-group">
