@@ -91,7 +91,8 @@ class ThreadsController extends Controller
     {
         // return $channelId;
         // $thread here we should eager load owner or user
-        return view('threads.show', compact(['thread', 'channelId']));
+        $replies = $thread->replies()->paginate(1);
+        return view('threads.show', compact(['thread', 'channelId', 'replies']));
     }
 
     /**

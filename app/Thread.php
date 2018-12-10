@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Thread extends Model
 {
     protected $guarded = [];
+
+    /**
+     * setting a global query scope to fetch replies count for each thread
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('replyCount', function($builder){
+            $builder->withCount('replies');
+        });
+    }
     
     /**
      * Get a string path for the thread.
@@ -49,7 +61,7 @@ class Thread extends Model
     }
 
     /**
-     * Add a reoky to the thread
+     * Add a reply to the thread
      *
      * @param $reply
      */
@@ -62,4 +74,9 @@ class Thread extends Model
     {
         return $filters->apply($query);
     }
+
+    /* public function getReplyCountAttribute()
+    {
+        return $this->replies()->count();
+    } */
 }
