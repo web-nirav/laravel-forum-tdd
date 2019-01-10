@@ -8,7 +8,7 @@
 
             <div class="card mb-5">
                 <div class="card-header">
-                    <a href="#">{{ $thread->creator->name }}</a> posted:
+                    <a href="{{ $thread->creator->profile() }}">{{ $thread->creator->name }}</a> posted:
                     {{ $thread->title }}
                 </div>
 
@@ -39,7 +39,7 @@
             <div class="card">
                 <div class="card-body">
                     This thread was published: {{ $thread->created_at->diffForHumans() }} by 
-                    <a href="#">{{ $thread->creator->name }}</a>, and currently 
+                    <a href="{{ $thread->creator->profile() }}">{{ $thread->creator->name }}</a>, and currently 
                     has {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count)}}.
                 </div>
             </div>

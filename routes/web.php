@@ -11,6 +11,10 @@
 |
 */
 
+/* 
+TODO: Continue from: 
+*/
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,3 +31,36 @@ Route::get('threads/{channel}/{thread}', 'ThreadsController@show')->name('thread
 Route::post('threads', 'ThreadsController@store')->name('threads.store');
 
 Route::post('threads/{channel}/{thread}/replies', 'RepliesController@store')->name('replies.store');
+
+Route::post('replies/{reply}/favorites', 'FavoritesController@store');
+
+Route::get('profiles/{user}', 'ProfilesController@show')->name('profile');
+
+Route::get('test', function(){
+
+   /*  $collection = collect([
+        ['product' => 'Desk', 'price' => 200],
+        ['product' => 'Chair', 'price' => 100],
+        ['product' => 'Bookcase', 'price' => 150],
+        ['product' => 'Door', 'price' => 100],
+    ]);
+    
+    $filtered = $collection->whereNotIn('price', [150, 200]);
+    
+    return $filtered->all(); */
+
+    /* $collection = collect([
+        ['product' => 'Desk', 'price' => 200],
+        ['product' => 'Chair', 'price' => 80],
+        ['product' => 'Bookcase', 'price' => 150],
+        ['product' => 'Pencil', 'price' => 30],
+        ['product' => 'Door', 'price' => 100],
+    ]);
+    
+    $filtered = $collection->whereNotInStrict('price', [100, 150, 200]);
+    
+    return $filtered->all(); */
+
+    dd(\Illuminate\Support\Collection::wrap(collect(['Nilu'])));
+    
+});

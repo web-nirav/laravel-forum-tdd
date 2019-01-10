@@ -18,6 +18,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .level {
+            display: flex; 
+            align-items: center;
+        }
+        .flex {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -42,6 +51,7 @@
                                 @auth
                                     <a class="dropdown-item" href="{{ route('threads.index') }}?by={{ auth()->user()->name }}">My Threads</a>       
                                 @endauth
+                                <a class="dropdown-item" href="{{ route('threads.index') }}?popular=1">Popular Threads</a>
                             </div>
                         </li>
                         <li class="nav-item">

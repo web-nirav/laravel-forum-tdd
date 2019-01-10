@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    /**
+     * Don't auto apply mass assignment protection.
+     *
+     * @var array
+     */
     protected $guarded = [];
+
+    protected $with = ['creator', 'channel']; // if we use this then there will no affect of querying with withoutGlobalScopes() instead use global query scope define in boot method like below.
 
     /**
      * setting a global query scope to fetch replies count for each thread
@@ -18,6 +25,10 @@ class Thread extends Model
         static::addGlobalScope('replyCount', function($builder){
             $builder->withCount('replies');
         });
+
+        /* static::addGlobalScope('creator', function($builder){
+           $builder->with('creator') ;
+        }); */
     }
     
     /**
@@ -38,6 +49,8 @@ class Thread extends Model
     public function replies()
     {
         return $this->hasMany(Reply::class);
+                    /* ->withCount('favorites')
+                    ->with('owner'); this will be done with gobal query scope or with property in reply model */
     }
 
     /**

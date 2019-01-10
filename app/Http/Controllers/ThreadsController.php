@@ -21,6 +21,10 @@ class ThreadsController extends Controller
     {
         $threads = $this->getThreds($channel, $filters);
 
+        if(request()->wantsJson()){
+            return $threads;
+        }
+
         /* if($channel->exists)
             $threads = $channel->threads()->latest();
         else
@@ -32,7 +36,6 @@ class ThreadsController extends Controller
             
             $threads->where('user_id', $user->id);
         } */
-        $threads = $threads->get();
         // $threads = Thread::filter($filters)->get();
 
         return view('threads.index', compact('threads'));
@@ -40,11 +43,15 @@ class ThreadsController extends Controller
 
     protected function getThreds($channel, $filters)
     {
-        $threads = Thread::latest()->filter($filters);
+        $threads = Thread::latest()->filter($filters); // removed with('channel') as added in Thred model to eager load for all queries
+
         if($channel->exists){
             $threads->where('channel_id', $channel->id);
         }
-        return $threads;
+
+        // dd($threads->toSql());
+
+        return $threads->get();
     }
 
     /**
@@ -89,9 +96,10 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
+        // return $thread->replies;
         // return $channelId;
         // $thread here we should eager load owner or user
-        $replies = $thread->replies()->paginate(1);
+        $replies = $thread->replies()->paginate(10);
         return view('threads.show', compact(['thread', 'channelId', 'replies']));
     }
 
