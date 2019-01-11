@@ -28,6 +28,7 @@ Route::get('threads', 'ThreadsController@index')->name('threads.index');
 Route::get('threads/create', 'ThreadsController@create')->name('threads.create');
 Route::get('threads/{channel}', 'ThreadsController@index')->name('threads.channel.index');
 Route::get('threads/{channel}/{thread}', 'ThreadsController@show')->name('threads.channel.show');
+Route::delete('threads/{channel}/{thread}', 'ThreadsController@destroy')->name('threads.channel.destroy');
 Route::post('threads', 'ThreadsController@store')->name('threads.store');
 
 Route::post('threads/{channel}/{thread}/replies', 'RepliesController@store')->name('replies.store');
@@ -61,6 +62,6 @@ Route::get('test', function(){
     
     return $filtered->all(); */
 
-    dd(\Illuminate\Support\Collection::wrap(collect(['Nilu'])));
+    // dd(\Illuminate\Support\Collection::wrap(collect(['Nilu'])));
     
 });

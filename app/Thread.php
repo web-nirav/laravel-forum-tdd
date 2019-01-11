@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    use RecordsActivity;
+
     /**
      * Don't auto apply mass assignment protection.
      *
@@ -13,7 +15,8 @@ class Thread extends Model
      */
     protected $guarded = [];
 
-    protected $with = ['creator', 'channel']; // if we use this then there will no affect of querying with withoutGlobalScopes() instead use global query scope define in boot method like below.
+    // if we use this then there will no affect of querying with withoutGlobalScopes() instead use global query scope define in boot method like below.
+    protected $with = ['creator', 'channel'];
 
     /**
      * setting a global query scope to fetch replies count for each thread
@@ -28,6 +31,17 @@ class Thread extends Model
 
         /* static::addGlobalScope('creator', function($builder){
            $builder->with('creator') ;
+        }); */
+
+        // this is called model's deleting event and when any thread will be deleted all replies will also be deleted and we can do same thing where we delete thread so this is like central part to do this if threads can be deleted from more than one place.
+        static::deleting(function($thread){
+            $thread->replies()->delete();
+        });
+
+        /* 
+        this method has been moved to RecordActivity trait as we can be using it generally for other different model events
+        static::created(function($thread){
+            $thread->recordActivity('created');
         }); */
     }
     

@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Thread' => 'App\Policies\ThreadPolicy',
     ];
 
     /**
@@ -25,6 +25,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // before all of our policy or before we even define any of our gate we will check if the given or login user is nirav then we will just authorize him
+        Gate::before(function($user){
+            return $user->name == 'NiravPrajapati';
+        });
     }
 }

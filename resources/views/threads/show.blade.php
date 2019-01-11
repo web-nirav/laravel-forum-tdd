@@ -8,8 +8,21 @@
 
             <div class="card mb-5">
                 <div class="card-header">
-                    <a href="{{ $thread->creator->profile() }}">{{ $thread->creator->name }}</a> posted:
-                    {{ $thread->title }}
+                    <div class="level">
+                        <span class="flex">
+                            <a href="{{ $thread->creator->profile() }}">{{ $thread->creator->name }}</a> posted:
+                            {{ $thread->title }}
+                        </span>
+
+                        @can('update', $thread)
+                            <form action="{{ $thread->path() }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-link">Delete Thread</button>
+                            </form>
+                        @endcan
+                    </div>
+                    
                 </div>
 
                 <div class="card-body">
