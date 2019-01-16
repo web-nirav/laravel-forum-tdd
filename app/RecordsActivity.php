@@ -25,7 +25,7 @@ trait RecordsActivity {
     }
 
     /**
-     * usingi this method in above boot method we can make it dynamic so that we can decide in model by orverriding this method to which event activity to record
+     * using this method in above boot method we can make it dynamic so that we can decide in model by overriding this method to which event activity to record
      *
      * @return void
      */
