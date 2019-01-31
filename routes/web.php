@@ -20,7 +20,10 @@ Route::get('/', function () {
 });
 
 
-Auth::routes();
+Auth::routes(); 
+// pass ['register' => false] if wanna disable registration 
+// pass ['verify' => true] to enable email verification on sign up
+// pass ['reset' => false] to remove forgot password link
 
 Route::get('/home', 'HomeController@index')->name('home');
 

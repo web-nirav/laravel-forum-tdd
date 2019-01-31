@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+use App\Channel;
 use Faker\Generator as Faker;
 
 /*
@@ -33,6 +35,13 @@ $factory->define(App\Thread::class, function($faker){
         },
         'title' => $faker->sentence,
         'body' => $faker->paragraph
+    ];
+});
+
+$factory->state(App\Thread::class, 'withExistingUsers', function($faker){
+    return [
+        'user_id' => User::all()->random()->id,
+        'channel_id' => Channel::all()->random()->id        
     ];
 });
 
